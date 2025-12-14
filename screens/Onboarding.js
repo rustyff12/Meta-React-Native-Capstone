@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useUser } from "../context/UserContext";
 import {
   View,
   Text,
@@ -14,10 +14,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Images } from "../assets/images";
 
 export default function Onboarding() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const { fname, setfName, lname, setlName, email, setEmail } = useUser();
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const isDisabled = !name || !emailRegex.test(email);
+  const isDisabled = !fname || !lname || !emailRegex.test(email);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -39,8 +38,16 @@ export default function Onboarding() {
                 <Text style={styles.inputLabel}>First Name</Text>
                 <TextInput
                   style={styles.input}
-                  onChangeText={setName}
-                  value={name}
+                  onChangeText={setfName}
+                  value={fname}
+                />
+              </View>
+              <View style={styles.inputWrapper}>
+                <Text style={styles.inputLabel}>First Name</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={setlName}
+                  value={lname}
                 />
               </View>
               <View style={styles.inputWrapper}>

@@ -31,15 +31,8 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      {/* <Stack.Navigator
-        initialRouteName={isSignedIn ? "Profile" : "Onboarding"}
-        screenOptions={{ headerShown: false }}
-      >
-        <Stack.Screen name="Onboarding" component={Onboarding} />
-        <Stack.Screen name="Profile" component={Profile} />
-      </Stack.Navigator> */}
       <Stack.Navigator
-        initialRouteName={"Profile"}
+        initialRouteName={isSignedIn ? "Profile" : "Onboarding"}
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Onboarding" component={Onboarding} />
@@ -48,3 +41,33 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+/*
+
+ <NavigationContainer>
+      {/* <Stack.Navigator
+        initialRouteName={isSignedIn ? "Profile" : "Onboarding"}
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen name="Onboarding" component={Onboarding} />
+        <Stack.Screen name="Profile" component={Profile} />
+      </Stack.Navigator> here
+      <Stack.Navigator
+        initialRouteName={"Profile"}
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen name="Onboarding" component={Onboarding} />
+        <Stack.Screen name="Profile" component={Profile} />
+      </Stack.Navigator>
+    </NavigationContainer>
+	*/
+
+/*
+	 <Stack.Navigator
+        initialRouteName={"Profile"}
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen name="Onboarding" component={Onboarding} />
+        <Stack.Screen name="Profile" component={Profile} />
+      </Stack.Navigator>
+	*/

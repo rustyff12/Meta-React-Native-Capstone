@@ -2,8 +2,10 @@ import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import BackArrow from "../assets/back-arrow.png";
 import Logo from "../assets/logo.png";
-import ProfileImage from "../assets/Profile.png";
+// import ProfileImage from "../assets/Profile.png";
+import { useUser } from "../context/UserContext";
 export default function Profile() {
+  const { image } = useUser();
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
@@ -12,8 +14,9 @@ export default function Profile() {
           <Pressable style={styles.backBtn}>
             <Image style={styles.backBtnImage} source={BackArrow} />
           </Pressable>
+          {/* <Image style={styles.headerLogo} source={ProfileImage} /> */}
           <Image style={styles.headerLogo} source={Logo} />
-          <Image style={styles.profileImage} source={ProfileImage} />
+          <Image style={styles.profileImage} source={image} />
         </View>
         {/* Body */}
         {/* <View style={styles.bodyContainer}>
