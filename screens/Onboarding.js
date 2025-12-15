@@ -11,13 +11,14 @@ import {
   ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 import { Images } from "../assets/images";
 
 export default function Onboarding() {
-  const { fname, setfName, lname, setlName, email, setEmail } = useUser();
+  const { fname, setFname, lname, setLname, email, setEmail } = useUser();
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const isDisabled = !fname || !lname || !emailRegex.test(email);
-
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -38,15 +39,15 @@ export default function Onboarding() {
                 <Text style={styles.inputLabel}>First Name</Text>
                 <TextInput
                   style={styles.input}
-                  onChangeText={setfName}
+                  onChangeText={setFname}
                   value={fname}
                 />
               </View>
               <View style={styles.inputWrapper}>
-                <Text style={styles.inputLabel}>First Name</Text>
+                <Text style={styles.inputLabel}>Last Name</Text>
                 <TextInput
                   style={styles.input}
-                  onChangeText={setlName}
+                  onChangeText={setLname}
                   value={lname}
                 />
               </View>
@@ -66,6 +67,7 @@ export default function Onboarding() {
             <Pressable
               style={[styles.btn, isDisabled && styles.btnDisabled]}
               disabled={isDisabled}
+              onPress={() => navigation.navigate("Home")}
             >
               <Text
                 style={[styles.btnText, isDisabled && styles.btnTextDisabled]}

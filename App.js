@@ -6,39 +6,54 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Onboarding from "./screens/Onboarding";
 import Profile from "./screens/Profile";
 import SplashScreen from "./screens/SplashScreen";
+import Home from "./screens/Home";
+import { UserProvider } from "./context/UserContext";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [isSignedIn, setIsSignedIn] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   useEffect(() => {
-    const getData = async () => {
+    const loadUserData = async () => {
       try {
-        const value = await AsyncStorage.getItem("loginStatus");
-        setIsSignedIn(value !== null ? JSON.parse(value) : false);
-      } catch (e) {
-        console.error("Error loading login status:", e.message);
+        const storedData = await AsyncStorage.getItem("userData");
+        if (storedData) {
+          const user = JSON.parse(storedData);
+          setIsSignedIn(true);
+        } else {
+          setIsSignedIn(false);
+        }
+      } catch (error) {
+        console.error("Error loading user data:", error);
         setIsSignedIn(false);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    getData();
+    loadUserData();
   }, []);
 
-  if (isSignedIn === null) {
-    <SplashScreen />;
+  if (isLoading) {
+    return <SplashScreen />;
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName={isSignedIn ? "Profile" : "Onboarding"}
-        screenOptions={{ headerShown: false }}
-      >
-        <Stack.Screen name="Onboarding" component={Onboarding} />
-        <Stack.Screen name="Profile" component={Profile} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <UserProvider>
+      <NavigationContainer>
+        {/* <Stack.Navigator
+          initialRouteName={isSignedIn ? "Profile" : "Onboarding"}
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen name="Onboarding" component={Onboarding} />
+          <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen name="Home" component={Home} />
+        </Stack.Navigator> */}
+        <Profile />
+      </NavigationContainer>
+    </UserProvider>
   );
 }
 
