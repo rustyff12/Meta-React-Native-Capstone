@@ -2,7 +2,6 @@ import { useUser } from "../context/UserContext";
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   TextInput,
   Pressable,
@@ -12,7 +11,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-import { Images } from "../assets/images";
+import Header from "../components/Header";
 
 export default function Onboarding() {
   const { fname, setFname, lname, setLname, email, setEmail } = useUser();
@@ -25,11 +24,9 @@ export default function Onboarding() {
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView>
           {/* Header */}
-          <View style={styles.header}>
-            <Image source={Images.logo} style={styles.headerImage} />
-          </View>
+          <Header showBack={false} showAvatar={false} />
 
           {/* Hero / Form */}
           <View style={styles.heroContainer}>
@@ -57,6 +54,7 @@ export default function Onboarding() {
                   style={styles.input}
                   onChangeText={setEmail}
                   value={email}
+                  keyboardType="email-address"
                 />
               </View>
             </View>
@@ -88,14 +86,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "#495E57",
     backgroundColor: "#EDEFEE",
   },
-  header: {
-    backgroundColor: "#EDEFEE",
-  },
-  headerImage: {
-    width: 220,
-    resizeMode: "contain",
-    alignSelf: "center",
-  },
+
   heroContainer: {
     flex: 7,
     backgroundColor: "#495E57",

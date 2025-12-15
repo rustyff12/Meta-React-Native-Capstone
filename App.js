@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Asset } from "expo-asset";
+import { Images } from "./assets/images";
+import { View, StyleSheet } from "react-native";
 import Onboarding from "./screens/Onboarding";
 import Profile from "./screens/Profile";
 import SplashScreen from "./screens/SplashScreen";
@@ -16,8 +19,10 @@ export default function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
 
   useEffect(() => {
-    const loadUserData = async () => {
+    const initApp = async () => {
       try {
+        await Asset.loadAsync([Images.logo, Images.back]);
+
         const storedData = await AsyncStorage.getItem("userData");
         if (storedData) {
           const user = JSON.parse(storedData);
@@ -26,14 +31,14 @@ export default function App() {
           setIsSignedIn(false);
         }
       } catch (error) {
-        console.error("Error loading user data:", error);
+        console.error("Error during app initialization:", error);
         setIsSignedIn(false);
       } finally {
         setIsLoading(false);
       }
     };
 
-    loadUserData();
+    initApp();
   }, []);
 
   if (isLoading) {
@@ -41,48 +46,28 @@ export default function App() {
   }
 
   return (
-    <UserProvider>
-      <NavigationContainer>
-        {/* <Stack.Navigator
-          initialRouteName={isSignedIn ? "Profile" : "Onboarding"}
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen name="Onboarding" component={Onboarding} />
-          <Stack.Screen name="Profile" component={Profile} />
-          <Stack.Screen name="Home" component={Home} />
-        </Stack.Navigator> */}
-        <Profile />
-      </NavigationContainer>
-    </UserProvider>
+    <View style={styles.appContainer}>
+      <SafeAreaProvider>
+        <UserProvider>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName={isSignedIn ? "Home" : "Onboarding"}
+              screenOptions={{ headerShown: false }}
+            >
+              <Stack.Screen name="Onboarding" component={Onboarding} />
+              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="Profile" component={Profile} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </UserProvider>
+      </SafeAreaProvider>
+    </View>
   );
 }
 
-/*
-
- <NavigationContainer>
-      {/* <Stack.Navigator
-        initialRouteName={isSignedIn ? "Profile" : "Onboarding"}
-        screenOptions={{ headerShown: false }}
-      >
-        <Stack.Screen name="Onboarding" component={Onboarding} />
-        <Stack.Screen name="Profile" component={Profile} />
-      </Stack.Navigator> here
-      <Stack.Navigator
-        initialRouteName={"Profile"}
-        screenOptions={{ headerShown: false }}
-      >
-        <Stack.Screen name="Onboarding" component={Onboarding} />
-        <Stack.Screen name="Profile" component={Profile} />
-      </Stack.Navigator>
-    </NavigationContainer>
-	*/
-
-/*
-	 <Stack.Navigator
-        initialRouteName={"Profile"}
-        screenOptions={{ headerShown: false }}
-      >
-        <Stack.Screen name="Onboarding" component={Onboarding} />
-        <Stack.Screen name="Profile" component={Profile} />
-      </Stack.Navigator>
-	*/
+const styles = StyleSheet.create({
+  appContainer: {
+    flex: 1,
+    backgroundColor: "#EDEFEE",
+  },
+});
