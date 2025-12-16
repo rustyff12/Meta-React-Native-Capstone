@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
 import AvatarSection from "../components/AvatarSection";
 import EditProfileForm from "../components/EditProfileForm";
-
+import { Fonts } from "../assets/fonts";
 export default function Profile() {
   return (
     <SafeAreaView style={styles.container}>
@@ -46,5 +46,6 @@ const styles = StyleSheet.create({
     color: "#333333ff",
     fontSize: 14,
     marginBottom: 10,
+    fontFamily: Fonts.medium,
   },
 });

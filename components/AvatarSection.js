@@ -1,5 +1,6 @@
 import { View, Text, Image, Pressable, StyleSheet } from "react-native";
 import { useProfileAvatar } from "../hooks/useProfileAvatar";
+import { Fonts } from "../assets/fonts";
 
 export default function AvatarSection() {
   const { image, pickImage, removeImage, getInitials, hasImage } =
@@ -60,6 +61,7 @@ const styles = StyleSheet.create({
   },
   largeInitialsText: {
     fontSize: 30,
+    fontFamily: Fonts.medium,
     fontWeight: "bold",
     color: "white",
   },
@@ -87,5 +89,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
+    fontFamily: Fonts.medium,
   },
 });
