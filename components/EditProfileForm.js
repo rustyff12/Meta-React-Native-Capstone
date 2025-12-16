@@ -7,12 +7,13 @@ import {
   Pressable,
   StyleSheet,
   Alert,
-  ScrollView,
 } from "react-native";
 import { useUser } from "../context/UserContext";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function EditProfileForm() {
+  const phoneRegex = /^\(?(\d{3})\)?[-. ]?(\d{3})[-. ]?(\d{4})$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const navigation = useNavigation();
   const {
     fname: contextFname,
@@ -23,7 +24,6 @@ export default function EditProfileForm() {
     setEmail,
     phone: contextPhone,
     setPhone,
-    image,
     orderStatuses: contextOrder,
     setOrderStatuses,
     passwordChanges: contextPassword,
@@ -63,7 +63,7 @@ export default function EditProfileForm() {
     contextNewsletter,
   ]);
 
-  const hasChanges = () => {
+  const hasUnsavedChanges = () => {
     return (
       fname !== contextFname ||
       lname !== contextLname ||
@@ -75,6 +75,12 @@ export default function EditProfileForm() {
       newsletter !== contextNewsletter
     );
   };
+
+  const isFormValid = () => {
+    return emailRegex.test(email) && phoneRegex.test(phone);
+  };
+
+  const canSave = () => hasUnsavedChanges() && isFormValid();
 
   const handleSave = () => {
     setFname(fname);
@@ -147,6 +153,9 @@ export default function EditProfileForm() {
           onChangeText={setLocalEmail}
           style={styles.input}
         />
+        {!emailRegex.test(email) && (
+          <Text style={styles.invalidEntry}>* This is not a valid Email</Text>
+        )}
       </View>
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Phone number</Text>
@@ -155,6 +164,11 @@ export default function EditProfileForm() {
           onChangeText={setLocalPhone}
           style={styles.input}
         />
+        {!phoneRegex.test(phone) && (
+          <Text style={styles.invalidEntry}>
+            * This is not a valid US Phone Number
+          </Text>
+        )}
       </View>
 
       <View style={styles.emailContainer}>
@@ -188,7 +202,7 @@ export default function EditProfileForm() {
         <Pressable
           style={[styles.button, styles.discardBtn]}
           onPress={handleDiscard}
-          disabled={!hasChanges()}
+          disabled={!hasUnsavedChanges()}
         >
           <Text style={styles.discardText}>Discard changes</Text>
         </Pressable>
@@ -197,10 +211,10 @@ export default function EditProfileForm() {
           style={[
             styles.button,
             styles.saveBtn,
-            !hasChanges() && styles.disabledBtn,
+            !canSave() && styles.disabledBtn,
           ]}
           onPress={handleSave}
-          disabled={!hasChanges()}
+          disabled={!canSave()}
         >
           <Text style={styles.saveText}>Save changes</Text>
         </Pressable>
@@ -228,7 +242,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     padding: 10,
   },
-
+  invalidEntry: {
+    color: "red",
+    fontWeight: 700,
+    fontSize: 16,
+  },
   emailContainer: {
     // backgroundColor: "red",
   },
