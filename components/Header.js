@@ -1,5 +1,6 @@
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import { Images } from "../assets/images";
+import { Fonts } from "../assets/fonts";
 import { useProfileAvatar } from "../hooks/useProfileAvatar";
 import { useNavigation } from "@react-navigation/native";
 
@@ -108,6 +109,7 @@ const styles = StyleSheet.create({
   },
   largeInitialsText: {
     fontSize: 30,
+    fontFamily: Fonts.medium,
     fontWeight: "bold",
     color: "white",
   },

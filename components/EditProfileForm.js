@@ -11,6 +11,8 @@ import {
 import { useUser } from "../context/UserContext";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Fonts } from "../assets/fonts";
+
 export default function EditProfileForm() {
   const phoneRegex = /^\(?(\d{3})\)?[-. ]?(\d{3})[-. ]?(\d{4})$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -233,6 +235,7 @@ const styles = StyleSheet.create({
   label: {
     color: "#333333ff",
     fontSize: 14,
+    fontFamily: Fonts.medium,
   },
   input: {
     borderColor: "#333333ff",
@@ -264,6 +267,7 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     flex: 1,
     color: "#333",
+    fontFamily: Fonts.medium,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -284,8 +288,8 @@ const styles = StyleSheet.create({
   disabledBtn: {
     backgroundColor: "#aaa",
   },
-  saveText: { color: "white", fontWeight: "bold" },
-  discardText: { color: "#333", fontWeight: "bold" },
+  saveText: { color: "white", fontWeight: "bold", fontFamily: Fonts.medium },
+  discardText: { color: "#333", fontWeight: "bold", fontFamily: Fonts.medium },
   logoutBtn: {
     marginTop: 20,
     padding: 16,
@@ -297,5 +301,6 @@ const styles = StyleSheet.create({
     color: "#333",
     fontWeight: "bold",
     fontSize: 16,
+    fontFamily: Fonts.medium,
   },
 });
