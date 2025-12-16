@@ -36,7 +36,7 @@ export default function App() {
   useEffect(() => {
     const prepare = async () => {
       try {
-        await Asset.loadAsync([Images.logo, Images.back, Images.hero]);
+        await Asset.loadAsync(Object.values(Images));
 
         await Font.loadAsync({
           "MarkaziText-Regular": MarkaziText_400Regular,

@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
   },
   mainContent: {
     flexDirection: "row",
+    gap: 10,
   },
   textContent: {
     gap: 12,
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.markaziRegular,
   },
   introText: {
-    fontSize: 20,
+    fontSize: 16,
     color: "#EDEFEE",
     fontFamily: Fonts.regular,
   },
@@ -55,8 +56,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   heroImage: {
-    width: 150,
-    height: 180,
+    width: 125,
+    height: 160,
     resizeMode: "cover",
     borderRadius: 10,
   },
