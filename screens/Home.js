@@ -1,5 +1,4 @@
-// screens/Home.js
-import React, { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { View, ScrollView, Text, Image, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Searchbar } from "react-native-paper";
@@ -16,9 +15,7 @@ const MenuItem = ({ name, price, description, image }) => (
   <View style={styles.itemContainer}>
     <View style={styles.textContainer}>
       <Text style={styles.itemName}>{name}</Text>
-      <Text style={styles.itemDescription} numberOfLines={2}>
-        {description}
-      </Text>
+      <Text style={styles.itemDescription}>{description}</Text>
       <Text style={styles.itemPrice}>${parseFloat(price).toFixed(2)}</Text>
     </View>
     {image && <Image source={image} style={styles.itemImage} />}
@@ -161,5 +158,5 @@ const styles = StyleSheet.create({
   itemName: { fontSize: 20, color: "#FBDABB", fontWeight: "bold" },
   itemDescription: { fontSize: 14, color: "#DDD", marginVertical: 6 },
   itemPrice: { fontSize: 18, color: "#EE9972", fontWeight: "bold" },
-  itemImage: { width: 90, height: 90, borderRadius: 10 },
+  itemImage: { width: 90, height: 90, borderRadius: 10, alignSelf: "center" },
 });
